@@ -7,11 +7,11 @@ class TodoBoard
 
     def get_command
         print "\nEnter a command: "
-        cmd, *args = gets.chomp.split(' ')
+        cmd, target, *args = gets.chomp.split(' ')
 
         case cmd
         when "mklist"
-            @lists[*args] = List.new(*args)
+            @lists[target] = List.new(target)
             return true
         when "ls"
             @lists.each do |key, val|
@@ -22,34 +22,38 @@ class TodoBoard
             p @lists
             return true
         when "mktodo"
-            @lists[*args[0]].add_item(*args[1..-1])
+            @lists[target].add_item(*args.map(&:to_i))
             return true
         when "up"
-            @lists[*args[0]].up(*args[1..-1])
+            @lists[target].up(*args.map(&:to_i))
             return true
         when "down"
-            @lists[*args[0]].down(*args[1..-1])
+            @lists[target].down(*args.map(&:to_i))
             return true
         when "swap"
-            @lists[*args[0]].swap(*args[1..-1])
+            @lists[target].swap(*args.map(&:to_i))
             return true
         when "sort"
-            @lists[*args[0]].sort_by_date!
+            @lists[target].sort_by_date!
             return true
         when "priority"
-            @lists[*args[0]].print_priority
+            @lists[target].print_priority
             return true
         when "print"
-            @lists[*args[0]].print
+            if args.empty?
+                @lists[target].print
+            else
+                @lists[target].print_full_item(*args[0].to_i)
+            end
             return true
         when "toggle"
-            @lists[*args[0]].toggle_item(*args[1..-1])
+            @lists[target].toggle_item(*args[0].to_i)
             return true
         when "purge"
-            @lists[*args[0]].purge
+            @lists[target].purge
             return true
         when "rm"
-            @lists[*args[0]].remove_item(*args[1..-1])
+            @lists[target].remove_item(*args[0].to_i)
             return true
         when "quit"
             return false
