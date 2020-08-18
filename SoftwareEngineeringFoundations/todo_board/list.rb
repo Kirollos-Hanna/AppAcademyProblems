@@ -123,13 +123,13 @@ class List
     end
 end
 
-list = List.new("Todos")
-list.add_item("tit", "2010-1-10", "desc")
-list.add_item("tat", "2010-1-12", "desc")
-list.add_item("tot", "2010-1-15", "desc")
-list.add_item("tut", "2010-1-14", "desc")
-list.toggle_item(2)
-list.toggle_item(0)
-list.print
-list.purge
-list.print
+# list = List.new("Todos")
+# list.add_item("tit", "2010-1-10", "desc")
+# list.add_item("tat", "2010-1-12", "desc")
+# list.add_item("tot", "2010-1-15", "desc")
+# list.add_item("tut", "2010-1-14", "desc")
+# list.toggle_item(2)
+# list.toggle_item(0)
+# list.print
+# list.purge
+# list.print

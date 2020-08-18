@@ -22,31 +22,34 @@ class TodoBoard
             p @lists
             return true
         when "mktodo"
-            @lists[*args[0]].add_item(*args)
+            @lists[*args[0]].add_item(*args[1..-1])
             return true
         when "up"
-            @list.up(*args)
+            @lists[*args[0]].up(*args[1..-1])
             return true
         when "down"
-            @list.down(*args)
+            @lists[*args[0]].down(*args[1..-1])
             return true
         when "swap"
-            @list.swap(*args)
+            @lists[*args[0]].swap(*args[1..-1])
             return true
         when "sort"
-            @list.sort_by_date!
+            @lists[*args[0]].sort_by_date!
             return true
         when "priority"
-            @list.print_priority
+            @lists[*args[0]].print_priority
             return true
         when "print"
-            @list.print
+            @lists[*args[0]].print
             return true
         when "toggle"
-            @list.toggle_item(*args)
+            @lists[*args[0]].toggle_item(*args[1..-1])
+            return true
+        when "purge"
+            @lists[*args[0]].purge
             return true
         when "rm"
-            @list.remove_item(*args)
+            @lists[*args[0]].remove_item(*args[1..-1])
             return true
         when "quit"
             return false
@@ -65,5 +68,5 @@ class TodoBoard
 
 end
 
-todoboard = TodoBoard.new("Todos")
+todoboard = TodoBoard.new()
 todoboard.run
