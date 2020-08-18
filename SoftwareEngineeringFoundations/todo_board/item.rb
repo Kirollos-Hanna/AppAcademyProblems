@@ -1,6 +1,8 @@
 class Item
 
     attr_accessor :title, :deadline, :description
+
+    attr_reader :isDone
     
     def self.valid_date?(dateStr)
         dateArr = dateStr.split("-")
@@ -24,6 +26,11 @@ class Item
             raise RuntimeError, "Invalid date"
         end
         @description = description
+        @isDone = false
+    end
+
+    def toggle
+        @isDone = !@isDone
     end
 
 end

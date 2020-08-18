@@ -47,9 +47,89 @@ class List
     def priority
         @items[0]
     end
+    
+    def print
+        p "Index Item Deadline Done"
+        @items.each.with_index do |elm, i|
+            p i.to_s + " " + elm.title + " " + elm.deadline + " " + elm.isDone.to_s
+        end
+    end
+
+    def print_full_item(ind)
+        if ind < @items.size
+            p @items[ind].title + " " + @items[ind].deadline + " " + @items[ind].description + " " + @items[ind].isDone.to_s
+        end
+    end
+
+    def print_priority
+        self.print_full_item(0)
+    end
+
+    def up(ind, amount=1)
+        item = nil
+        if ind < @items.size
+            item = @items[ind]
+        end
+        (1..amount).each do |i|
+            currentInd = ind - i
+            if currentInd < 0
+                break
+            end
+            itemToGoDown = @items[currentInd]
+            @items[currentInd] = item
+            @items[currentInd+1] = itemToGoDown
+        end
+    end
+
+    def down(ind, amount=1)
+        item = nil
+        if ind < @items.size
+            item = @items[ind]
+        end
+        (1..amount).each do |i|
+            currentInd = ind + i
+            
+            if currentInd+1 > @items.size
+                break
+            end
+
+            itemToGoUp = @items[currentInd]
+            @items[currentInd] = item
+            @items[currentInd-1] = itemToGoUp
+        end
+    end
+
+    def sort_by_date!
+        @items.sort_by! { |item| item.deadline }
+    end
+
+    def toggle_item(ind)
+        @items[ind].toggle
+    end
+
+    def remove_item(ind)
+        @items.delete_at(ind)
+    end
+
+    def purge
+        i = 0
+        while i < @items.size
+            if @items[i].isDone
+                self.remove_item(i)
+                i -= 1
+            end
+            i += 1
+        end
+    end
 end
 
-newList = List.new("First List")
-p newList.size
-p newList.add_item("t", "2020-1-10", "d")
-p newList.size
+list = List.new("Todos")
+list.add_item("tit", "2010-1-10", "desc")
+list.add_item("tat", "2010-1-12", "desc")
+list.add_item("tot", "2010-1-15", "desc")
+list.add_item("tut", "2010-1-14", "desc")
+list.toggle_item(2)
+list.toggle_item(0)
+list.print
+list.purge
+list.print
